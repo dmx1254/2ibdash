@@ -1,4 +1,5 @@
 import { clsx, type ClassValue } from "clsx";
+import { ArchiveX, Command, File, Inbox, Send, Trash2 } from "lucide-react";
 
 import { twMerge } from "tailwind-merge";
 
@@ -97,7 +98,7 @@ export interface ServerBuy {
   updatedAt: Date;
 }
 
-export interface ServerExchange {
+export interface ServerSell {
   _id: string;
   serverName: string;
   serverCategory: string;
@@ -318,3 +319,139 @@ export const convertDateForSearchParams = (date: Date) => {
 
   return `${day}-${month}-${year}`;
 };
+
+export const emojis = [
+  "😀",
+  "😍",
+  "👍",
+  "❤️",
+  "👏",
+  "🎉",
+  "🤔",
+  "😂",
+  "🤩",
+  "🚀",
+  "💡",
+  "🌟",
+  "🥳",
+  "😎",
+  "🔥",
+  "😅",
+  "💪",
+  "😢",
+  "😱",
+  "🧐",
+  "🙌",
+  "🌈",
+  "✨",
+  "🎶",
+  "🍀",
+  "📚",
+  "🕶️",
+  "🏆",
+  "⚡",
+  "🌍",
+  "💌",
+  "📸",
+  "🏅",
+  "🍔",
+];
+
+export const navMain = [
+  {
+    title: "Command",
+    url: "#",
+    Icon: Command,
+    isActive: true,
+  },
+  {
+    title: "Inbox",
+    url: "#",
+    Icon: Inbox,
+    isActive: false,
+  },
+  {
+    title: "Drafts",
+    url: "#",
+    Icon: File,
+    isActive: false,
+  },
+  {
+    title: "Sent",
+    url: "#",
+    Icon: Send,
+    isActive: false,
+  },
+  {
+    title: "Junk",
+    url: "#",
+    Icon: ArchiveX,
+    isActive: false,
+  },
+  {
+    title: "Trash",
+    url: "#",
+    Icon: Trash2,
+    isActive: false,
+  },
+];
+
+export type AttachedFile = {
+  name: string;
+  content: string | ArrayBuffer | null;
+  type: string;
+};
+
+export interface UpdateSAchat {
+  serverName: string;
+  serverCategory: string;
+  serverPriceDh: number;
+  serverStatus: string;
+}
+
+export interface UpdateSVente {
+  serverName: string;
+  serverCategory: string;
+  serverPrice: number;
+  serverStatus: string;
+}
+
+export interface UpdateSAchatCreate {
+  serverName: string;
+  serverCategory: string;
+  serverPriceDh: number;
+  serverMinQty: number;
+  serverStatus: string;
+}
+
+export interface UpdateSVenteCreate {
+  serverName: string;
+  serverCategory: string;
+  serverPrice: number;
+  serverMinQty: number;
+  serverStatus: string;
+}
+
+export interface Currency {
+  _id: string;
+  [key: string]: string | number | Date;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface ChartLegendDataType {
+  month: string;
+  desktop: number;
+  mobile: number;
+}
+
+export interface ChartDesktopType {
+  desktop: number;
+  month: string;
+  fill: string;
+}
+
+export interface IbyGraph {
+  name: string;
+  total: number;
+}

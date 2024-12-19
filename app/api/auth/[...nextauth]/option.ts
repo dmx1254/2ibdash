@@ -30,7 +30,7 @@ export const options: NextAuthOptions = {
             email: credentials.email,
           });
           if (!user) {
-            throw new Error("Pas d'utilisateur avec ce numéro");
+            throw new Error("Pas d'utilisateur avec cet email");
           }
 
           if (!user.isAdmin) {

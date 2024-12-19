@@ -1,12 +1,10 @@
-import PasskeyModal from "@/components/PasskeyModal";
 import PatientForm from "@/components/forms/PatientForm";
-import { SearchParamProps } from "@/types";
 import Image from "next/image";
 import { getServerSession } from "next-auth";
 import { options } from "./api/auth/[...nextauth]/option";
 import { redirect } from "next/navigation";
 
-export default async function Home({ searchParams }: SearchParamProps) {
+export default async function Home() {
   const session = await getServerSession(options);
   if (session) redirect("/dashboard");
 

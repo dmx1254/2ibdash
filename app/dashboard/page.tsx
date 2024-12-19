@@ -9,32 +9,31 @@ import {
 import { Tabs, TabsContent } from "@/components/ui/tabs";
 
 import { Overview } from "@/components/dash-comp/overview";
-import { RecentAppointments } from "@/components/dash-comp/RecentAppointments";
-import { SearchParamProps } from "@/types";
+import { RecentOrdersIby } from "@/components/dash-comp/RecentOrdersIby";
 import PasskeyModal from "@/components/PasskeyModal";
 import { getServerSession } from "next-auth";
 import { options } from "../api/auth/[...nextauth]/option";
 import { ibenOrdersCounts } from "@/lib/actions/appointment.actions";
 
-import {
-  CalendarCheck2,
-  BriefcaseMedical,
-  ShoppingCart,
-  ShoppingBasket,
-} from "lucide-react";
+import { ShoppingCart, ShoppingBasket } from "lucide-react";
 import {
   getPatientDevicesTypes,
   getPatientVisit,
   getUsersCounts,
+  ibyOrdersGraph,
 } from "@/lib/actions/patient.actions";
-import { getibytradeOrdersCount } from "@/lib/actions/doctor.actions";
+import {
+  getibytradeOrdersCount,
+  userOnline,
+} from "@/lib/actions/doctor.actions";
 import { PieChartVisitors } from "@/components/PieChartVisitors";
 import { BarCharDeskMob } from "@/components/BarCharDeskMob";
 import Count from "@/components/Count";
+import { SearchParamProps } from "@/lib/types/types";
 
 export const metadata: Metadata = {
-  title: "Medicalecare Dashboard",
-  description: "Medicalecare dashboard for health appintments",
+  title: "2ibn Dashboard",
+  description: "2ibn dashboard for virtual game dofus management",
 };
 
 export default async function DashboardPage({
@@ -44,11 +43,11 @@ export default async function DashboardPage({
   const totalIbenOrders = await ibenOrdersCounts();
   const totalUsers = await getUsersCounts();
   const totalIbyOrders = await getibytradeOrdersCount();
+  const usersOnline = await userOnline();
   const visites = await getPatientVisit();
   const devices = await getPatientDevicesTypes();
+  const oIbyGraph = await ibyOrdersGraph();
   const isAdmin = !!searchParams.isAdmin;
-
-  // console.log(visites);
 
   return (
     <>
@@ -123,7 +122,7 @@ export default async function DashboardPage({
                 <Card className="stat-card-admin bg-appointments border-none">
                   <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                     <CardTitle className="text-base font-semibold">
-                      Utilisateurs actif
+                      Utilisateurs en ligne
                     </CardTitle>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -140,10 +139,10 @@ export default async function DashboardPage({
                   </CardHeader>
                   <CardContent>
                     <div className="text-32-bold">
-                      <Count count={124} duration={5} />
+                      <Count count={usersOnline} duration={5} />
                     </div>
                     <p className="text-xs text-green-500 mt-2">
-                      +78 depuis la dernière heure
+                      +8 depuis la dernière heure
                     </p>
                   </CardContent>
                 </Card>
@@ -151,21 +150,21 @@ export default async function DashboardPage({
               <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
                 <Card className="col-span-4 border-dark-500">
                   <CardHeader>
-                    <CardTitle>Rendez vous</CardTitle>
+                    <CardTitle>Nos chiffres en DH</CardTitle>
                   </CardHeader>
                   <CardContent className="pl-2">
-                    <Overview />
+                    <Overview data={oIbyGraph} />
                   </CardContent>
                 </Card>
                 <Card className="col-span-4 md:col-span-3 border-dark-500">
                   <CardHeader>
-                    <CardTitle>Rendez vous recents</CardTitle>
+                    <CardTitle>Commandes d'achats recents</CardTitle>
                     <CardDescription className="text-xs text-green-500">
-                      Vos {5} derniers rendez-vous vous attendent.
+                      Vos {5} derniers commandes d'achats vous attendent.
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <RecentAppointments />
+                    <RecentOrdersIby />
                   </CardContent>
                 </Card>
               </div>

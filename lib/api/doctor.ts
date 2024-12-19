@@ -1,112 +1,5 @@
-import { isValidObjectId } from "mongoose";
-import { DoctorCreating, UserRegister } from "@/types";
-import PatientModel from "../models/patient.model";
-import bcrypt from "bcrypt";
-import { parseStringify } from "../utils";
-import VisitModel from "../models/visit.model";
 import { goapiModels } from "../models/ibytrade-models";
-
-export async function getDocteurAndDetails() {
-  try {
-    const allDoctorsFind = PatientModel.find({ role: "DOCTOR" });
-
-    const allDoctorsCountFind = PatientModel.countDocuments({ role: "DOCTOR" });
-
-    const docteursInServiceCountFind = PatientModel.countDocuments({
-      role: "DOCTOR",
-      doctorStatus: true,
-    });
-    const docteursOutServiceCountFind = PatientModel.countDocuments({
-      role: "DOCTOR",
-      doctorStatus: false,
-    });
-
-    const [
-      allDoctors,
-      allDoctorsCount,
-      docteursInServiceCount,
-      docteursOutServiceCount,
-    ] = await Promise.all([
-      allDoctorsFind,
-      allDoctorsCountFind,
-      docteursInServiceCountFind,
-      docteursOutServiceCountFind,
-    ]);
-    return {
-      allDoctors,
-      allDoctorsCount,
-      docteursInServiceCount,
-      docteursOutServiceCount,
-    };
-  } catch (error: any) {
-    throw new Error(`Error to find doctors: ${error.message}`);
-  }
-}
-
-export async function createNewDoctor(doctorData: DoctorCreating) {
-  try {
-    const isDocteurExist = await PatientModel.findOne({
-      phone: doctorData.phone,
-    });
-    if (isDocteurExist)
-      return {
-        error: "Ce docteur avec ce numéro existe déjà",
-        user: {},
-        message: "",
-      };
-
-    const hashedPassword = await bcrypt.hash(doctorData.password, 10);
-    const doctorCreated = {
-      ...doctorData,
-      gender: "autre",
-      password: hashedPassword,
-    };
-    const newDoctor = await PatientModel.create(doctorCreated);
-    const doctor = parseStringify(newDoctor);
-    return {
-      error: "",
-      user: doctor,
-      message: "Docteur créé avec succès",
-    };
-  } catch (error: any) {
-    throw new Error(error);
-  }
-}
-
-export async function getActifDoctors() {
-  try {
-    const doctors = await PatientModel.find({
-      role: "DOCTOR",
-      doctorStatus: true,
-    })
-      .select("_id")
-      .select("name")
-      .select("speciality")
-      .select("profile")
-      .select("createdAt")
-      .select("updatedAt");
-    return doctors;
-  } catch (error: any) {
-    throw new Error(error);
-  }
-}
-
-export async function getDoctorsWithRemoveFields() {
-  try {
-    const doctors = await PatientModel.find({
-      role: "DOCTOR",
-    })
-      .select("_id")
-      .select("name")
-      .select("speciality")
-      .select("profile")
-      .select("createdAt")
-      .select("updatedAt");
-    return doctors;
-  } catch (error: any) {
-    throw new Error(error);
-  }
-}
+import { ibenModels } from "../models/ibendouma-models";
 
 export async function getIbyOrdersCount() {
   try {
@@ -119,27 +12,10 @@ export async function getIbyOrdersCount() {
   }
 }
 
-export async function getActifDoctorsInPatientForm() {
-  try {
-    const isActifDoctors = await PatientModel.find({
-      role: "DOCTOR",
-      doctorStatus: true,
-    })
-      .select("_id")
-      .select("name")
-      .select("speciality")
-      .select("profile")
-      .select("createdAt")
-      .select("updatedAt");
-    return parseStringify(isActifDoctors);
-  } catch (error: any) {
-    throw new Error(error);
-  }
-}
-
 export async function getPatientsDevices() {
   try {
-    const result = await PatientModel.aggregate([
+    const { UserIbenModel } = await ibenModels;
+    const result = await UserIbenModel.aggregate([
       {
         $group: {
           _id: {
@@ -221,6 +97,7 @@ export async function getPatientsDevices() {
 
 export async function getDesktopVisits() {
   try {
+    const { VisitModel } = await ibenModels;
     const result = await VisitModel.aggregate([
       // 1. Regrouper par mois
       {
@@ -287,6 +164,69 @@ export async function getDesktopVisits() {
     return result;
   } catch (error) {
     console.error(error);
+    return [];
+  }
+}
+
+export async function getIbenUserOnlineCount() {
+  try {
+    const { UserIbenModel } = await ibenModels;
+
+    const users = await UserIbenModel.countDocuments({
+      online: true,
+    });
+
+    return users;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+
+
+export async function getIbyOrdersGraph() {
+  try {
+    const { BuyModel } = await goapiModels;
+
+    // Récupérer les données regroupées par mois
+    const result = await BuyModel.aggregate([
+      {
+        $group: {
+          _id: { $month: "$createdAt" },
+          total: { $sum: "$totalPrice" }, // Somme du prix total pour chaque mois
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+          name: {
+            $switch: {
+              branches: [
+                { case: { $eq: ["$_id", 1] }, then: "Jan" },
+                { case: { $eq: ["$_id", 2] }, then: "Feb" },
+                { case: { $eq: ["$_id", 3] }, then: "Mar" },
+                { case: { $eq: ["$_id", 4] }, then: "Apr" },
+                { case: { $eq: ["$_id", 5] }, then: "May" },
+                { case: { $eq: ["$_id", 6] }, then: "Jun" },
+                { case: { $eq: ["$_id", 7] }, then: "Jul" },
+                { case: { $eq: ["$_id", 8] }, then: "Aug" },
+                { case: { $eq: ["$_id", 9] }, then: "Sep" },
+                { case: { $eq: ["$_id", 10] }, then: "Oct" },
+                { case: { $eq: ["$_id", 11] }, then: "Nov" },
+                { case: { $eq: ["$_id", 12] }, then: "Dec" },
+              ],
+              default: "Unknown",
+            },
+          },
+          total: { $round: ["$total", 2] }, // Total arrondi à 2 décimales
+        },
+      },
+      { $sort: { _id: 1 } }, // Tri par mois
+    ]);
+
+    return result; // Retourne le tableau transformé
+  } catch (error) {
+    console.error("Erreur lors de la récupération des commandes par mois :", error);
     return [];
   }
 }

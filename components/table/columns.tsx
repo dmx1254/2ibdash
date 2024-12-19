@@ -4,9 +4,6 @@ import { ColumnDef } from "@tanstack/react-table";
 
 import StatusBadge from "../StatusBadge";
 import { formatDateTime, parsedDevise } from "@/lib/utils";
-import Image from "next/image";
-import AppointmentModal from "../AppointmentModal";
-import AppointmentAction from "../AppointmentAction";
 import { Button } from "../ui/button";
 import { CaretSortIcon } from "@radix-ui/react-icons";
 import { Orderbuy } from "@/lib/types/types";

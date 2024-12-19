@@ -48,9 +48,8 @@ const MobileBar = () => {
         <div className="flex flex-col items-start justify-between h-full pb-12">
           <div className="w-full flex flex-col items-start gap-2">
             {sidebarInfo.map((profil) => (
-              <div className="flex flex-col items-start">
+              <div key={profil.id} className="flex flex-col items-start">
                 <Button
-                  key={profil.id}
                   className={clsx("cursor-pointer flex items-center gap-2", {
                     "text-green-500 opacity-90 hover:opacity-100":
                       profil.slug === pathname,

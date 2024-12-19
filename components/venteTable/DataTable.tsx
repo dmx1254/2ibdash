@@ -1,5 +1,5 @@
 "use client";
-import {  useState } from "react";
+import { useState } from "react";
 
 import {
   ColumnDef,
@@ -95,59 +95,8 @@ export function DataTable<TData, TValue>({
     replace(`${pathname}?${params.toString()}`);
   };
 
-  // onClick={() => handlePageParams(currentPage - 1)}
-
-  // onClick={() => handlePageParams(currentPage + 1)}
-
-  // console.log(currentPage);
-
   return (
     <div className="w-full">
-      {/* <div className="flex items-center gap-4 py-4">
-        <Input
-          placeholder="Rechercher un patient..."
-          id="searchInput"
-          // value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
-          value={searchValue}
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            handleSearchChange(e.target.value)
-          }
-          defaultValue={searchParams.get("patient")?.toString()}
-          className="max-w-sm placeholder:text-dark-500 border-dark-500 bg-transparent text-14-regular"
-        />
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button
-              variant="outline"
-              className="ml-auto border-dark-500 text-14-regular focus-visible:ring-0 focus-visible:ring-offset-0"
-            >
-              Filtrer <ChevronDownIcon className="ml-2 h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent
-            align="end"
-            className="bg-dark-300 border-dark-500"
-          >
-            {table
-              .getAllColumns()
-              .filter((column) => column.getCanHide())
-              .map((column) => {
-                return (
-                  <DropdownMenuCheckboxItem
-                    key={column.id}
-                    className="capitalize"
-                    checked={column.getIsVisible()}
-                    onCheckedChange={(value) =>
-                      column.toggleVisibility(!!value)
-                    }
-                  >
-                    {column.id}
-                  </DropdownMenuCheckboxItem>
-                );
-              })}
-          </DropdownMenuContent>
-        </DropdownMenu>
-      </div> */}
       <div className="data-table">
         <Table className="shad-table">
           <TableHeader className="bg-dark-200">

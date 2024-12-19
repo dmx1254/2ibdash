@@ -1,56 +1,15 @@
-import { isValidObjectId } from "mongoose";
-import { AppointmentUpdate, CreateAppointmentParams } from "@/types";
-import { connectDB } from "../db";
-import AppointmentModel from "../models/appointment.model";
-
 import { parse, startOfDay, endOfDay, addDays, subDays } from "date-fns";
 
 import { ibenModels } from "../models/ibendouma-models";
 import { goapiModels } from "../models/ibytrade-models";
+import { Resend } from "resend";
+import { OrderDeliveryTemplate } from "@/components/orderConfirmed-template";
+import { OrderPaymentTemplate } from "@/components/order-iby-confirmed";
+
+const resend = new Resend(process.env.RESEND_2IBN_API_KEY);
 
 function parseDate(dateString: string): Date {
   return parse(dateString, "dd-MM-yyyy", new Date());
-}
-
-connectDB();
-
-export async function createPatientAppointment(
-  appointment: CreateAppointmentParams
-) {
-  try {
-    const newAppointment = await AppointmentModel.create(appointment);
-    return newAppointment;
-  } catch (error) {
-    console.log(error);
-  }
-}
-
-export async function getPatientApppointment(appointmentId: string) {
-  if (!isValidObjectId(appointmentId)) {
-    throw new Error("Invalid appointment ID");
-  }
-  try {
-    const appointment = await AppointmentModel.findById(appointmentId).sort({
-      createdAt: -1,
-    });
-    return appointment;
-  } catch (error) {
-    console.log(error);
-  }
-}
-
-export async function getUserPatientAppointment(userId: string) {
-  if (!isValidObjectId(userId)) {
-    throw new Error("Invalid user ID");
-  }
-  try {
-    const usersAppointment = await AppointmentModel.find({ userId }).sort({
-      updatedAt: -1,
-    });
-    return usersAppointment;
-  } catch (error) {
-    console.log(error);
-  }
 }
 
 export async function getAllOrdersAchatList(
@@ -143,6 +102,112 @@ export async function getAllOrdersAchatList(
       payedCount,
       pendingCount,
       cancelledCount,
+      totalPages,
+    };
+  } catch (error: any) {
+    throw new Error(error.message);
+  }
+}
+
+export async function getAllServersAchatList(
+  servername: string,
+  category: string,
+  currentPage: number
+) {
+  const { ServerModel } = await goapiModels;
+  let itemsPerPage: number = 8;
+  const offset = (currentPage - 1) * itemsPerPage;
+
+  const matchConditions: any = {};
+
+  if (servername && servername.trim() !== "") {
+    matchConditions.serverName = { $regex: servername, $options: "i" };
+  }
+
+  if (category && category.trim() !== "") {
+    matchConditions.serverCategory = { $regex: category, $options: "i" };
+  }
+
+  try {
+    const totalDocuments = await ServerModel.countDocuments(matchConditions);
+
+    const allServers = await ServerModel.aggregate([
+      {
+        $match: matchConditions,
+      },
+      {
+        $sort: { createdAt: -1 },
+      },
+      {
+        $skip: offset,
+      },
+      {
+        $limit: itemsPerPage,
+      },
+    ]);
+
+    const servers = JSON.parse(JSON.stringify(allServers));
+
+    const totalPagesGet = JSON.parse(JSON.stringify(totalDocuments));
+
+    const totalPages = Math.ceil(totalPagesGet / itemsPerPage);
+
+    return {
+      servers,
+      totalPages,
+    };
+  } catch (error: any) {
+    throw new Error(error.message);
+  }
+}
+
+export async function getAllServersVenteList(
+  servername: string,
+  category: string,
+  currentPage: number
+) {
+  const { ServerModelIben } = await ibenModels;
+  let itemsPerPage: number = 8;
+  const offset = (currentPage - 1) * itemsPerPage;
+
+  const matchConditions: any = {};
+
+  if (servername && servername.trim() !== "") {
+    matchConditions.serverName = { $regex: servername, $options: "i" };
+  }
+
+  if (category && category.trim() !== "") {
+    matchConditions.serverCategory = { $regex: category, $options: "i" };
+  }
+
+  try {
+    const totalDocuments = await ServerModelIben.countDocuments(
+      matchConditions
+    );
+
+    const allServers = await ServerModelIben.aggregate([
+      {
+        $match: matchConditions,
+      },
+      {
+        $sort: { createdAt: -1 },
+      },
+      {
+        $skip: offset,
+      },
+      {
+        $limit: itemsPerPage,
+      },
+    ]);
+
+    const servers = JSON.parse(JSON.stringify(allServers));
+
+    const totalPagesGet = JSON.parse(JSON.stringify(totalDocuments));
+
+    const totalPages = Math.ceil(totalPagesGet / itemsPerPage);
+
+    return {
+      servers,
       totalPages,
     };
   } catch (error: any) {
@@ -430,7 +495,7 @@ export async function exchangeUpdateStatus(status: string, echangeId: string) {
 export async function venteIbenUpdateStatus(status: string, venteId: string) {
   try {
     const { OrderModelIben } = await ibenModels;
-    await OrderModelIben.findByIdAndUpdate(
+    const response = await OrderModelIben.findByIdAndUpdate(
       venteId,
       {
         $set: {
@@ -443,60 +508,95 @@ export async function venteIbenUpdateStatus(status: string, venteId: string) {
       }
     );
 
+    const res = JSON.parse(JSON.stringify(response));
+    if (res.status === "Terminée") {
+      const { email, lastname, firstname } = await res.billing;
+      const { cur, totalPrice, orderNum, updatedAt, products } = res;
+      const { data, error } = await resend.emails.send({
+        from: "2IBN Support <support@2ibn.com>",
+        to: [email],
+        text: "",
+        subject: "🎉 Order Confirmed! 🚀",
+        react: OrderDeliveryTemplate({
+          lastname,
+          firstname,
+          cur: cur,
+          totalPrice,
+          orderNum,
+          dateDelivered: updatedAt,
+          products,
+        }),
+      });
+      if (error) {
+        return console.log(error);
+      }
+    }
     return { message: "Status mis à jour avec succès" };
   } catch (error: any) {
     throw new Error(error.message);
   }
 }
 
-export async function updateSingleAppointment(
-  appointmentId: string,
-  appointment: AppointmentUpdate
-) {
-  if (!isValidObjectId(appointmentId)) {
-    throw new Error("Invalid appointment ID");
-  }
+export async function AchatGoUpdateStatus(status: string, achatId: string) {
   try {
-    const updatedAppointment = await AppointmentModel.findByIdAndUpdate(
-      appointmentId,
+    const { BuyModel } = await goapiModels;
+    const { UserIbenModel } = await ibenModels;
+    const response = await BuyModel.findByIdAndUpdate(
+      achatId,
       {
-        primaryPhysician: appointment.primaryPhysician,
-        schedule: appointment.schedule,
-        status: appointment.status,
-        cancellationReason: appointment.cancellationReason,
+        $set: {
+          status,
+        },
       },
       {
         new: true,
+        runValidators: true,
       }
     );
-    return updatedAppointment;
-  } catch (error: any) {
-    throw new Error(error.message);
-  }
-}
 
-export async function deleteSingleAppointment(appointmentId: string) {
-  if (!isValidObjectId(appointmentId)) {
-    throw new Error("Invalid appointment ID");
-  }
+    const res = JSON.parse(JSON.stringify(response));
+    const userEmail = await UserIbenModel.findById(res.userId);
 
-  try {
-    const appointmentDel = await AppointmentModel.findByIdAndDelete(
-      appointmentId
-    );
-    return appointmentDel;
-  } catch (error: any) {
-    throw new Error(error.message);
-  }
-}
+    if (!userEmail) return;
 
-export async function fiveRecentAppointments() {
-  try {
-    const recentFiveAppointment = await AppointmentModel.find()
-      .sort({ updatedAt: -1 })
-      .limit(5);
+    const userParsed = JSON.parse(JSON.stringify(userEmail));
+    if (res.status === "Payée") {
+      const {
+        lastname,
+        firstname,
+        currencymethod,
+        totalPrice,
+        numBuy,
+        updatedAt,
+        qte,
+        server,
+        gameName,
+        pu,
+      } = res;
+      const { data, error } = await resend.emails.send({
+        from: "2IBN Support <support@2ibn.com>",
+        to: [userParsed.email],
+        text: "",
+        subject: `🎉 Order number ${numBuy} payed! 🚀`,
+        react: OrderPaymentTemplate({
+          lastname,
+          firstname,
+          currencymethod,
+          totalPrice,
+          qte,
+          numBuy,
+          server,
+          gameName,
+          pu,
+          datePayed: updatedAt,
+        }),
+      });
+      if (error) {
+        return console.log(error);
+      }
+    }
 
-    return recentFiveAppointment;
+    return { message: "Status mis à jour avec succès" };
   } catch (error: any) {
     throw new Error(error.message);
   }
@@ -509,5 +609,18 @@ export async function getAllIbenOrdersCounts() {
     return totalOrders;
   } catch (error: any) {
     throw new Error(error.message);
+  }
+}
+
+export async function fiveRecentIbyOrders() {
+  try {
+    const { BuyModel } = await goapiModels;
+
+    const recentOrderIby = await BuyModel.find()
+      .sort({ createdAt: -1 })
+      .limit(5);
+    return recentOrderIby;
+  } catch (error) {
+    console.log(error);
   }
 }

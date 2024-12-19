@@ -38,23 +38,23 @@ const PatientSearch = () => {
     const params = new URLSearchParams(searchParams);
     params.set("page", "1");
 
-    if (params.get("type")) {
-      params.delete("type");
+    if (params.get("userStatus")) {
+      params.delete("userStatus");
     }
 
     replace(`${pathname}?${params.toString()}`);
   };
 
   const checkIsSearchParamsData =
-    searchParams.get("type") || searchParams.get("email");
+    searchParams.get("userStatus") || searchParams.get("email");
 
-  const handleTypeChange = (type: string) => {
+  const handleUserStatusChange = (status: string) => {
     const params = new URLSearchParams(searchParams);
     params.set("page", "1");
-    if (type) {
-      params.set("type", type);
+    if (status) {
+      params.set("userStatus", status);
     } else {
-      params.delete("type");
+      params.delete("userStatus");
     }
     replace(`${pathname}?${params.toString()}`);
   };
@@ -84,11 +84,11 @@ const PatientSearch = () => {
         <PopoverContent className="w-80 bg-dark-300 border-dark-500 p-4 rounded-lg">
           <div className="flex flex-col space-y-4">
             <div className="w-full">
-              <Label htmlFor="type" className="text-white/80 mb-2">
+              <Label htmlFor="userStatus" className="text-white/80">
                 Filtrer
               </Label>
-              <Select onValueChange={handleTypeChange}>
-                <SelectTrigger className="shad-select-trigger">
+              <Select onValueChange={handleUserStatusChange}>
+                <SelectTrigger className="shad-select-trigger mt-2">
                   <SelectValue placeholder="banni/online" />
                 </SelectTrigger>
                 <SelectContent className="shad-select-content">
@@ -110,7 +110,7 @@ const PatientSearch = () => {
 
             {checkIsSearchParamsData && (
               <button
-                className="w-full outline-none text-white/80 selft-center  text-red-200 rounded p-2"
+                className="w-full outline-none text-white/80 selft-center text-red-200 rounded p-2"
                 onClick={handleCancelFilter}
               >
                 Annuler les filtres

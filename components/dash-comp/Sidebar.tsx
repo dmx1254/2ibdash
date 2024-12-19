@@ -3,41 +3,41 @@
 import { sidebarInfo } from "@/types/otherTypes";
 import { Button } from "../ui/button";
 import Link from "next/link";
-import { LogOut, Stethoscope } from "lucide-react";
 import clsx from "clsx";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
-import { signOut } from "next-auth/react";
+import { useSession } from "next-auth/react";
+import { NavUser } from "../sidebar-bottom";
+import EmailDialog from "../EmailDialog";
 
 const Sidebar = () => {
   const pathname = usePathname();
 
-  const logout = async () => {
-    await signOut();
+  const { data: session } = useSession();
+
+  const user = {
+    name: session?.user.name || "Admin",
+    email: session?.user.email || "admin@gmail.com",
+    avatar: "/avatars/04.png",
   };
 
   return (
     <div className="admin-profile-cop sticky left-0 top-0 bottom-0 max-h-screen max-md:hidden md:w-60">
       <div className="flex flex-col items-start gap-4">
-        <Link href="/dashboard" className="max-md:hidden">
+        <Link href="/dashboard" className="flex items-center -mt-4 -ml-3">
           <Image
-            src="/assets/icons/logo-full.svg"
-            height={100}
-            width={100}
+            src="/dash-logo.png"
+            height={130}
+            width={130}
             alt="medicale care"
-            className="mb-3 h-10 w-fit"
+            className="mb-3 h-20 w-20"
           />
+          <span className="max-md:hidden font-extrabold -mt-3 text-[34px] text-white -ml-3">
+            2ibn
+          </span>
         </Link>
-        <Link href="/dashboard" className="flex self-center md:hidden">
-          <Image
-            src="/assets/icons/logo-icon.svg"
-            height={100}
-            width={100}
-            alt="medicale care"
-            className="mb-3 h-10 w-fit"
-          />
-        </Link>
-        <div className="w-full flex flex-col items-start gap-2">
+
+        <div className="w-full flex flex-col items-start gap-2 -mt-4">
           {sidebarInfo.map((profil) => (
             <div key={profil.id} className="flex flex-col items-start">
               <Button
@@ -80,14 +80,10 @@ const Sidebar = () => {
           ))}
         </div>
       </div>
-      <Button
-        variant="ghost"
-        className="flex items-center gap-2 outline-none hover:text-red-500"
-        onClick={logout}
-      >
-        <LogOut />
-        <span className="text-base max-md:hidden">Déconnexion</span>
-      </Button>
+      <div className="flex flex-col items-center gap-4">
+        <EmailDialog />
+        <NavUser user={user} />
+      </div>
     </div>
   );
 };

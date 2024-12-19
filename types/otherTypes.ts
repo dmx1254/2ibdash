@@ -1,4 +1,10 @@
-import { LucideIcon, Server, ShoppingBag, Stethoscope, UsersRound } from "lucide-react";
+import {
+  LucideIcon,
+  Server,
+  ShoppingBag,
+  Stethoscope,
+  UsersRound,
+} from "lucide-react";
 import {
   UserRound,
   HeartPulse,
@@ -53,25 +59,14 @@ export const sidebarInfo: profilePerso[] = [
     slug: "/dashboard",
     icon: House,
   },
-  {
-    id: "pawxd74",
-    title: "Rendez vous",
-    slug: "/dashboard/rendez-vous",
-    icon: CalendarCheck,
-    // HeartPulse
-  },
+
   {
     id: "lpqza69",
     title: "Clients",
     slug: "/dashboard/clients",
     icon: UsersRound,
   },
-  {
-    id: "zazlq25",
-    title: "Docteurs",
-    slug: "/dashboard/docteurs",
-    icon: BriefcaseMedical,
-  },
+
   {
     id: "laqlq25",
     title: "Commandes",
@@ -112,17 +107,5 @@ export const sidebarInfo: profilePerso[] = [
         slug: "/dashboard/serveurs/ventes",
       },
     ],
-  },
-  {
-    id: "zayga25",
-    title: "Ajouter un patient",
-    slug: "/dashboard/nouveau-patient",
-    icon: ShieldPlus,
-  },
-  {
-    id: "lpawv47",
-    title: "Dossier médical ",
-    slug: "/dashboard/dossier-medical",
-    icon: Stethoscope,
   },
 ];

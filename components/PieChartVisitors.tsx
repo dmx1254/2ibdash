@@ -25,17 +25,17 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-// import { ChartDesktopType } from "@/lib/utils";
+import { ChartDesktopType } from "@/lib/utils";
 
 export const description = "An interactive pie chart";
 
-const desktopData = [
-  { month: "january", desktop: 186, fill: "var(--color-january)" },
-  { month: "february", desktop: 305, fill: "var(--color-february)" },
-  { month: "march", desktop: 237, fill: "var(--color-march)" },
-  { month: "april", desktop: 173, fill: "var(--color-april)" },
-  { month: "may", desktop: 209, fill: "var(--color-may)" },
-];
+// const desktopData = [
+//   { month: "january", desktop: 186, fill: "var(--color-january)" },
+//   { month: "february", desktop: 305, fill: "var(--color-february)" },
+//   { month: "march", desktop: 237, fill: "var(--color-march)" },
+//   { month: "april", desktop: 173, fill: "var(--color-april)" },
+//   { month: "may", desktop: 209, fill: "var(--color-may)" },
+// ];
 
 const chartConfig = {
   visitors: {
@@ -97,13 +97,11 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-export function PieChartVisitors(
-//   {
-//   desktopData,
-// }: {
-//   desktopData: ChartDesktopType[];
-// }
-) {
+export function PieChartVisitors({
+  desktopData,
+}: {
+  desktopData: ChartDesktopType[];
+}) {
   const id = "pie-interactive";
   const [activeMonth, setActiveMonth] = React.useState(desktopData[0].month);
 

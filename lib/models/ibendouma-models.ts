@@ -400,6 +400,27 @@ async function initializeModels(): Promise<any> {
     }
   );
 
+  interface Visit extends Document {
+    userId: string;
+    ipAdress: string;
+  }
+
+  const visitSchema = new Schema(
+    {
+      userId: {
+        type: String,
+        required: true,
+      },
+      ipAdress: {
+        type: String,
+        default: "",
+      },
+    },
+    {
+      timestamps: true,
+    }
+  );
+
   const codeSchema: Schema = new Schema(
     {
       code: {
@@ -433,6 +454,8 @@ async function initializeModels(): Promise<any> {
   const UserPaymentModel =
     ibendDB.models.payment ||
     ibendDB.model<IPaymentMethod>("payment", paymentMethodSchema);
+  const VisitModel =
+    ibendDB.models.visit || ibendDB.model<Visit>("visit", visitSchema);
 
   return {
     ServerModelIben,
@@ -444,6 +467,7 @@ async function initializeModels(): Promise<any> {
     CodeIbenModel,
     UserIbenModel,
     UserPaymentModel,
+    VisitModel,
   };
 }
 

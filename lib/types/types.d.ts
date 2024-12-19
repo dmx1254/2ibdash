@@ -166,3 +166,8 @@ export interface UserPaymentMethodResponse {
   trc20Address?: string;
   cardInfo?: Card;
 }
+
+export type SearchParamProps = {
+  params: { [key: string]: string };
+  searchParams: { [key: string]: string | string[] | undefined };
+};

@@ -15,21 +15,20 @@ const PatientPage = async ({
 }: {
   searchParams?: {
     email?: string;
-    type?: string;
+    userStatus?: string;
     startDate?: string;
     endDate?: string;
     page?: number;
   };
 }) => {
   const email = searchParams?.email || "";
-  const type = searchParams?.type || "";
+  const userStatus = searchParams?.userStatus || "";
   const startDate = searchParams?.startDate || "";
   const endDate = searchParams?.endDate || "";
   const currentPageStr = searchParams?.page || 1;
   const currentPage = Number(currentPageStr);
-  const data = await getCustomers(email, startDate, endDate, currentPage);
+  const data = await getCustomers(email, startDate, endDate, currentPage, userStatus);
 
-  // console.log(data?.users);
 
   return (
     <div className="mx-auto flex w-full flex-col space-y-14">

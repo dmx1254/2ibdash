@@ -2,8 +2,6 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 
-import DeletePatient from "../patientActtion/DeletePatient";
-import UpdatePatient from "../patientActtion/UpdatePatient";
 import { Button } from "../ui/button";
 import { CaretSortIcon } from "@radix-ui/react-icons";
 import { Badge } from "../ui/badge";
@@ -11,6 +9,8 @@ import PhoneNumberDisplay from "../phone-number-display";
 import { USERLOGINRESPONSE } from "@/lib/types/types";
 import { cn } from "@/lib/utils";
 import ClientAction from "./ClientAction";
+import UpdateClient from "../patientActtion/UpdateClient";
+import DeleteClient from "../patientActtion/DeleteClient";
 
 export const columns: ColumnDef<USERLOGINRESPONSE>[] = [
   {
@@ -110,8 +110,8 @@ export const columns: ColumnDef<USERLOGINRESPONSE>[] = [
       return (
         <div className="flex gap-1 max-xl:ml-4">
           <div className="flex items-center gap-3">
-            <DeletePatient id={data._id} />
-            <UpdatePatient data={data} />
+            <DeleteClient id={data._id} />
+            <UpdateClient data={data} />
           </div>
           {/* <AppointmentModal
             type="schedule"
