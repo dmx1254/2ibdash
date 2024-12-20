@@ -67,13 +67,13 @@ const AddNewServerAchat = () => {
   return (
     <div className="">
       <AlertDialog open={open} onOpenChange={setOpen}>
-        <button
-          className="flex items-center justify-center text-sm p-2 border rounded border-dark-500 bg-dark-400 transition-all"
+        <span
+          className="flex items-center cursor-pointer justify-center text-sm p-2 border rounded border-dark-500 bg-dark-400 transition-all"
           onClick={() => setOpen(true)}
         >
           Ajouter un serveur{" "}
           <FilePlus size={16} className="text-sky-400 ml-1" />
-        </button>
+        </span>
 
         <AlertDialogContent className="bg-dark-300 border-dark-500 w-full max-w-3xl overflow-y-auto">
           <AlertDialogHeader>

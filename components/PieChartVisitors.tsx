@@ -29,13 +29,13 @@ import { ChartDesktopType } from "@/lib/utils";
 
 export const description = "An interactive pie chart";
 
-// const desktopData = [
-//   { month: "january", desktop: 186, fill: "var(--color-january)" },
-//   { month: "february", desktop: 305, fill: "var(--color-february)" },
-//   { month: "march", desktop: 237, fill: "var(--color-march)" },
-//   { month: "april", desktop: 173, fill: "var(--color-april)" },
-//   { month: "may", desktop: 209, fill: "var(--color-may)" },
-// ];
+const desktopDataTest = [
+  { month: "january", desktop: 186, fill: "var(--color-january)" },
+  { month: "february", desktop: 305, fill: "var(--color-february)" },
+  { month: "march", desktop: 237, fill: "var(--color-march)" },
+  { month: "april", desktop: 173, fill: "var(--color-april)" },
+  { month: "may", desktop: 209, fill: "var(--color-may)" },
+];
 
 const chartConfig = {
   visitors: {
@@ -103,13 +103,16 @@ export function PieChartVisitors({
   desktopData: ChartDesktopType[];
 }) {
   const id = "pie-interactive";
-  const [activeMonth, setActiveMonth] = React.useState(desktopData[0].month);
+  const [activeMonth, setActiveMonth] = React.useState(desktopData[0]?.month);
 
   const activeIndex = React.useMemo(
-    () => desktopData.findIndex((item) => item.month === activeMonth),
+    () => desktopData.findIndex((item) => item?.month === activeMonth),
     [activeMonth]
   );
-  const months = React.useMemo(() => desktopData.map((item) => item.month), []);
+  const months = React.useMemo(
+    () => desktopData?.map((item) => item?.month),
+    []
+  );
 
   return (
     <Card
@@ -178,7 +181,7 @@ export function PieChartVisitors({
               }
             />
             <Pie
-              data={desktopData}
+              data={desktopData || desktopDataTest}
               dataKey="desktop"
               nameKey="month"
               innerRadius={60}
@@ -213,7 +216,7 @@ export function PieChartVisitors({
                           y={viewBox.cy}
                           className="fill-white text-3xl font-bold"
                         >
-                          {desktopData[activeIndex].desktop.toLocaleString()}
+                          {desktopData[activeIndex]?.desktop.toLocaleString()}
                         </tspan>
                         <tspan
                           x={viewBox.cx}

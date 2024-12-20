@@ -6,7 +6,6 @@ import { useSearchParams, usePathname, useRouter } from "next/navigation";
 import { useDebouncedCallback } from "use-debounce";
 import { Input } from "./ui/input";
 
-import { ActifRegisterDoctor } from "@/types";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { Label } from "./ui/label";
 import {
@@ -77,9 +76,9 @@ const PatientSearch = () => {
       />
       <Popover>
         <PopoverTrigger asChild>
-          <button className="bg-dark-400 p-2.5 rounded-[10px]">
+          <span className="bg-dark-400 p-2.5 rounded-[10px]">
             <Filter size={22} className="text-white/50" />
-          </button>
+          </span>
         </PopoverTrigger>
         <PopoverContent className="w-80 bg-dark-300 border-dark-500 p-4 rounded-lg">
           <div className="flex flex-col space-y-4">

@@ -58,16 +58,16 @@ const DateFilter = () => {
     <div className="max-sm:w-full flex flex-col sm:flex-row gap-4">
       <Popover>
         <PopoverTrigger asChild>
-          <button
+          <span
             className={cn(
-              "flex items-center gap-2 w-full sm:w-[190px] text-white/50 justify-start text-left font-normal p-2 bg-dark-400 border border-dark-500 rounded",
+              "flex items-center cursor-pointer gap-2 w-full sm:w-[190px] text-white/50 justify-start text-left font-normal p-2 bg-dark-400 border border-dark-500 rounded",
               !startDate && "text-white/50"
             )}
           >
             <CalendarIcon className="mr-2 h-4 w-4 text-white/50" />
             {startDate ? customFilterDate(startDate) : "Date de début"}
             <ChevronDown className="ml-auto h-4 w-4 text-white/50" />
-          </button>
+          </span>
         </PopoverTrigger>
         <PopoverContent
           className="w-auto p-0 z-50 bg-dark-400 border-dark-500"
@@ -84,16 +84,16 @@ const DateFilter = () => {
       </Popover>
       <Popover>
         <PopoverTrigger asChild>
-          <button
+          <span
             className={cn(
-              "flex items-center gap-2 w-full sm:w-[190px] text-white/50 justify-start text-left font-normal p-2 bg-dark-400 border border-dark-500 rounded",
+              "flex items-center cursor-pointer gap-2 w-full sm:w-[190px] text-white/50 justify-start text-left font-normal p-2 bg-dark-400 border border-dark-500 rounded",
               !endDate && "text-white/50"
             )}
           >
             <CalendarIcon className="mr-2 h-4 w-4 text-white/50" />
             {endDate ? customFilterDate(endDate) : "Date de fin"}
             <ChevronDown className="ml-auto h-4 w-4 text-white/50" />
-          </button>
+          </span>
         </PopoverTrigger>
         <PopoverContent
           className="w-auto p-0 z-50 bg-dark-400 border-dark-500"
