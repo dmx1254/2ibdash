@@ -16,10 +16,22 @@ import { Button } from "./ui/button";
 import clsx from "clsx";
 import { sidebarInfo } from "@/types/otherTypes";
 import { usePathname } from "next/navigation";
+import EmailDialog from "./EmailDialog";
+import { NavUser } from "./sidebar-bottom";
+import { useSession } from "next-auth/react";
 
 const MobileBar = () => {
   const [open, setOpen] = useState<boolean>(false);
   const pathname = usePathname();
+
+  const { data: session } = useSession();
+
+  const user = {
+    name: session?.user.name || "Admin",
+    email: session?.user.email || "admin@gmail.com",
+    avatar: "/avatars/04.png",
+  };
+
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger>
@@ -30,14 +42,17 @@ const MobileBar = () => {
       <SheetContent side="left" className="bg-dark-300 border-dark-500 h-full">
         <SheetHeader>
           <SheetTitle>
-            <Link href="/dashboard" className="">
+            <Link href="/dashboard" className="flex items-center -mt-4 -ml-3">
               <Image
-                src="/assets/icons/logo-full.svg"
-                height={100}
-                width={100}
-                alt="medicale care"
-                className="mb-3 h-10 w-fit"
+                src="/dash-logo.png"
+                height={130}
+                width={130}
+                alt="2ibn"
+                className="mb-3 h-20 w-20"
               />
+              <span className="font-extrabold -mt-3 text-[34px] text-white -ml-3">
+                2ibn
+              </span>
             </Link>
           </SheetTitle>
           {/* <SheetDescription>
@@ -89,13 +104,10 @@ const MobileBar = () => {
             ))}
           </div>
 
-          <Button
-            variant="ghost"
-            className="flex items-center gap-2 outline-none hover:text-red-500 text-[#7A7C7E]"
-          >
-            <LogOut />
-            <span className="">Logout</span>
-          </Button>
+          <div className="flex flex-col items-start gap-4 mb-4">
+            <EmailDialog />
+            <NavUser user={user} />
+          </div>
         </div>
       </SheetContent>
     </Sheet>

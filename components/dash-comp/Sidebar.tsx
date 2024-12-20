@@ -29,7 +29,7 @@ const Sidebar = () => {
             src="/dash-logo.png"
             height={130}
             width={130}
-            alt="medicale care"
+            alt="2ibn"
             className="mb-3 h-20 w-20"
           />
           <span className="max-md:hidden font-extrabold -mt-3 text-[34px] text-white -ml-3">
@@ -80,7 +80,7 @@ const Sidebar = () => {
           ))}
         </div>
       </div>
-      <div className="flex flex-col items-center gap-4">
+      <div className="flex flex-col items-start gap-4">
         <EmailDialog />
         <NavUser user={user} />
       </div>

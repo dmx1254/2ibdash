@@ -72,21 +72,6 @@ export function NavUser({
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem className="flex items-center gap-2">
-            <Sparkles />
-            Upgrade to Pro
-          </DropdownMenuItem>
-        </DropdownMenuGroup>
-        <DropdownMenuSeparator />
-        <DropdownMenuGroup>
-          <DropdownMenuItem className="flex items-center gap-2">
-            <BadgeCheck />
-            Account
-          </DropdownMenuItem>
-          <DropdownMenuItem className="flex items-center gap-2">
-            <CreditCard />
-            Billing
-          </DropdownMenuItem>
-          <DropdownMenuItem className="flex items-center gap-2">
             <Bell />
             Notifications
           </DropdownMenuItem>

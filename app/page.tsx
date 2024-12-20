@@ -13,19 +13,12 @@ export default async function Home() {
       {/* {isAdmin && <PasskeyModal />} */}
       <section className="remove-scrollbar container my-auto">
         <div className="sub-container max-w-[496px]">
-          <Image
-            src="/assets/icons/logo-full.svg"
-            height={1000}
-            width={1000}
-            alt="medicale care"
-            className="mb-12 h-10 w-fit"
-          />
           <PatientForm />
         </div>
       </section>
       <Image
-        src="/assets/images/onboarding-img.png"
-        alt="medicale care"
+        src="/dash2.jpg"
+        alt="2ibn dashboard"
         height={1000}
         width={1000}
         className="side-img max-w-[50%] sticky top-0 right-0 bottom-0"

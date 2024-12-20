@@ -45,10 +45,12 @@ import {
   sendUserServers,
 } from "@/lib/actions/verification.actions";
 import { usePathname } from "next/navigation";
-import clsx from "clsx";
 
 const EmailDialog = () => {
-  const myLastEmails = window?.localStorage.getItem("lastEmails");
+  const myLastEmails =
+    typeof window !== "undefined"
+      ? window.localStorage.getItem("lastEmails")
+      : null;
   const lastEmails: string[] | null = myLastEmails
     ? JSON.parse(myLastEmails)
     : null;
@@ -225,7 +227,7 @@ const EmailDialog = () => {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger>
-        <Button className="text-white/80 cursor-pointer">
+        <Button className="text-white cursor-pointer">
           <Mail className="mr-2 h-65 w-65" /> Envoyer un email
         </Button>
       </DialogTrigger>
