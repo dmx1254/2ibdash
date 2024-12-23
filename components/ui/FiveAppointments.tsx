@@ -5,14 +5,18 @@ import Image from "next/image";
 import StatusBadge from "../StatusBadge";
 import { Orderbuy } from "@/lib/types/types";
 
-const FiveRecentsOrdersIby = ({ order }: { order: Orderbuy }) => {
-  const randomNumberUser = Math.floor(Math.random() * 5) + 1;
-
+const FiveRecentsOrdersIby = ({
+  order,
+  index,
+}: {
+  order: Orderbuy;
+  index: number;
+}) => {
   return (
     <div className="flex items-center">
       <div className="flex items-center gap-3">
         <Image
-          src={`/avatars/0${randomNumberUser}.png`}
+          src={`/avatars/0${index}.png`}
           alt={order.numBuy}
           width={100}
           height={100}

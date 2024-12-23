@@ -8,8 +8,8 @@ export async function RecentOrdersIby() {
   if (!fiveRecentsOrders) return <div>Loading...</div>;
   return (
     <div className="space-y-8">
-      {fiveRecentsOrders?.map((ord) => (
-        <FiveRecentsOrdersIby key={ord._id} order={ord} />
+      {fiveRecentsOrders?.map((ord, index) => (
+        <FiveRecentsOrdersIby key={ord._id} order={ord} index={index + 1} />
       ))}
     </div>
   );
