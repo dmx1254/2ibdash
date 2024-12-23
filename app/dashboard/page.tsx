@@ -11,8 +11,6 @@ import { Tabs, TabsContent } from "@/components/ui/tabs";
 import { Overview } from "@/components/dash-comp/overview";
 import { RecentOrdersIby } from "@/components/dash-comp/RecentOrdersIby";
 import PasskeyModal from "@/components/PasskeyModal";
-import { getServerSession } from "next-auth";
-import { options } from "../api/auth/[...nextauth]/option";
 import { ibenOrdersCounts } from "@/lib/actions/appointment.actions";
 
 import { ShoppingCart, ShoppingBasket } from "lucide-react";
@@ -39,7 +37,6 @@ export const metadata: Metadata = {
 export default async function DashboardPage({
   searchParams,
 }: SearchParamProps) {
-  const session = await getServerSession(options);
   const totalIbenOrders = await ibenOrdersCounts();
   const totalUsers = await getUsersCounts();
   const totalIbyOrders = await getibytradeOrdersCount();
