@@ -28,12 +28,10 @@ const PasskeyModal = () => {
   const [passkey, setPasskey] = useState("");
   const [error, setError] = useState("");
 
-  // const encryptedKey =
-  //   typeof window !== "undefined"
-  //     ? window.localStorage.getItem("accessKey")
-  //     : null;
-
-  const encryptedKey = window.localStorage.getItem("accessKey") ?? null;
+  const encryptedKey =
+    typeof window !== "undefined"
+      ? window.localStorage.getItem("accessKey")
+      : null;
 
   useEffect(() => {
     const accessKey = encryptedKey && decryptKey(encryptedKey);
