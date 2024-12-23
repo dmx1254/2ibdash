@@ -15,6 +15,7 @@ import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { toast } from "sonner";
 import { updateNewVenteCur } from "@/lib/actions/patient.actions";
+import { Button } from "./ui/button";
 
 const CurrencyDialogVenteUpdate = ({
   cur,
@@ -58,12 +59,12 @@ const CurrencyDialogVenteUpdate = ({
   return (
     <div>
       <AlertDialog open={open} onOpenChange={setOpen}>
-        <button
+        <Button
           className="inline-flex items-center justify-center p-0.5 border rounded border-orange-300 text-orange-400 transition-all hover:text-orange-500"
           onClick={() => setOpen(true)}
         >
           <FilePenLine size={18} />
-        </button>
+        </Button>
 
         <AlertDialogContent className="bg-dark-200 border-dark-300 w-full">
           <AlertDialogHeader>
@@ -85,18 +86,18 @@ const CurrencyDialogVenteUpdate = ({
           </div>
 
           <AlertDialogFooter className="flex gap-4">
-            <button
+            <Button
               className="text-sm text-red-500 font-extrabold transition-all hover:opacity-80"
               onClick={() => setOpen(false)}
             >
               Fermer
-            </button>
-            <button
+            </Button>
+            <Button
               className="text-sm text-green-500 font-extrabold transition-all hover:opacity-80"
               onClick={handleUpdateCurrency}
             >
               {isUpdating ? "Updating..." : "Mettre à jour"}
-            </button>
+            </Button>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
