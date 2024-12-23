@@ -4,8 +4,6 @@ import FiveRecentsOrdersIby from "../ui/FiveAppointments";
 
 export async function RecentOrdersIby() {
   const fiveRecentsOrders: Orderbuy[] = await getFiveRecentOrders();
-
-  if (!fiveRecentsOrders) return <div>Loading...</div>;
   return (
     <div className="space-y-8">
       {fiveRecentsOrders?.map((ord, index) => (

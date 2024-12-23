@@ -49,17 +49,6 @@ export default async function DashboardPage({
   const oIbyGraph = await ibyOrdersGraph();
   const isAdmin = !!searchParams.isAdmin;
 
-  if (
-    !totalIbenOrders ||
-    !totalUsers ||
-    !totalIbyOrders ||
-    !usersOnline ||
-    !visites ||
-    !devices ||
-    !oIbyGraph
-  )
-    return <div>Loading...</div>;
-
   return (
     <>
       <div className="flex-col md:flex">

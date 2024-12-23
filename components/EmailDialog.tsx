@@ -226,11 +226,13 @@ const EmailDialog = () => {
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger>
-        <Button className="text-white cursor-pointer">
-          <Mail className="mr-2 h-65 w-65" /> Envoyer un email
-        </Button>
-      </DialogTrigger>
+      <Button
+        className="text-white cursor-pointer"
+        onClick={() => setIsOpen(true)}
+      >
+        <Mail className="mr-2 h-65 w-65" /> Envoyer un email
+      </Button>
+
       <DialogContent className="sm:max-w-4xl max-h-[90vh] overflow-y-auto bg-dark-400 border-dark-500">
         <DialogHeader>
           <DialogTitle>Nouveau Message</DialogTitle>
