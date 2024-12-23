@@ -59,12 +59,12 @@ const CurrencyDialogVenteUpdate = ({
   return (
     <div>
       <AlertDialog open={open} onOpenChange={setOpen}>
-        <Button
+        <button
           className="inline-flex items-center justify-center p-0.5 border rounded border-orange-300 text-orange-400 transition-all hover:text-orange-500"
           onClick={() => setOpen(true)}
         >
           <FilePenLine size={18} />
-        </Button>
+        </button>
 
         <AlertDialogContent className="bg-dark-200 border-dark-300 w-full">
           <AlertDialogHeader>
