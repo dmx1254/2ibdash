@@ -66,9 +66,6 @@ const PatientForm = () => {
       router.push("/dashboard?isAdmin=true");
     }
 
-    // if (user) router.push("/patients/profile");
-    // if (user) router.push(`/patients/${user.$id}/register`);
-
     try {
     } catch (error) {
       console.log(error);

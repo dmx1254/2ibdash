@@ -113,21 +113,6 @@ export const columns: ColumnDef<USERLOGINRESPONSE>[] = [
             <DeleteClient id={data._id} />
             <UpdateClient data={data} />
           </div>
-          {/* <AppointmentModal
-            type="schedule"
-            patientId={data?.patientId}
-            userId={data?.userId}
-            phone={data?.phone}
-            appointment={data}
-          />
-          <AppointmentModal
-            type="cancel"
-            patientId={data?.patientId}
-            userId={data?.userId}
-            appointment={data}
-            phone={data?.phone}
-          /> */}
-
           <ClientAction data={data} />
         </div>
       );
