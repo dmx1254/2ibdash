@@ -1,16 +1,13 @@
 "use server";
 
 import { Resend } from "resend";
-import {
-  getServersAndCurrencies,
-} from "../api/patient";
+import { getServersAndCurrencies } from "../api/patient";
 import { AttachedFile } from "../utils";
 import { revalidatePath } from "next/cache";
 import { WriteEmailTemplate } from "@/components/WriteEmail-template";
 import { SendServerEmailTemplate } from "@/components/SendServerEmailTemplate";
 
 const resend = new Resend(process.env.RESEND_2IBN_API_KEY);
-
 
 export async function sendUserEmail(
   email: string,
@@ -57,7 +54,7 @@ export async function sendUserEmail(
 
   // Envoi de l'email via Resend
   const { data, error } = await resend.emails.send({
-    from: "2IBN Support <support@2ibn.com>",
+    from: "Ibendouma Support <support@2ibn.com>",
     to: [email],
     subject: object,
     text: "",
@@ -66,6 +63,7 @@ export async function sendUserEmail(
   });
 
   if (error) {
+    console.log(error);
     return error;
   }
 

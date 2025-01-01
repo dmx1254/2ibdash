@@ -48,9 +48,13 @@ import {
 const EmailDialog = ({
   isShowText = false,
   email = "",
+  lastnameS,
+  firstnameS,
 }: {
   isShowText?: boolean;
   email?: string;
+  lastnameS?: string;
+  firstnameS?: string;
 }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [to, setTo] = useState<string>("");
@@ -104,12 +108,13 @@ const EmailDialog = ({
       });
     } else {
       try {
+        if (!lastnameS || !firstnameS) return;
         setIsLoadingEmail(true);
         const result = await sendUserEmail(
           emailFiltered[0],
           message,
-          userEmails[0].lastname,
-          userEmails[0].firstname,
+          lastnameS,
+          firstnameS,
           subject,
           attachedFiles
         );

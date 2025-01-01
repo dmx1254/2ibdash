@@ -104,7 +104,16 @@ export const columns: ColumnDef<OrderSell>[] = [
         <div className="flex items-center gap-2">
           <OrderVenteDel id={data._id} />
           <SeeOrderVente data={data} />
-          <EmailDialog isShowText={true} email={data.billing.email || data?.detailUser?.email} />
+          <EmailDialog
+            isShowText={true}
+            email={data.billing.email || data?.detailUser?.email}
+            lastnameS={
+              data.billing.lastname || data?.detailUser?.lastname || ""
+            }
+            firstnameS={
+              data.billing.firstname || data?.detailUser?.firstname || ""
+            }
+          />
           <OrderVenteDot data={data} />
         </div>
       );
