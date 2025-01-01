@@ -20,9 +20,6 @@ const DateFilter = () => {
   const { replace } = useRouter();
   const pathname = usePathname();
 
-  console.log("startDate: " + startDate);
-  console.log("endDate: " + endDate);
-
   // useEffect(() => {
   //   const start = searchParams.get("startDate");
   //   const end = searchParams.get("endDate");

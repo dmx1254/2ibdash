@@ -31,6 +31,7 @@ import StatusBadge from "../StatusBadge";
 
 const SeeOrderBuy = ({ data }: { data: Orderbuy }) => {
   const [open, setOpen] = useState<boolean>(false);
+  console.log(data);
 
   return (
     <div>
@@ -97,12 +98,10 @@ const SeeOrderBuy = ({ data }: { data: Orderbuy }) => {
             </div>
             <div className="w-full flex items-center space-x-2 mt-4">
               <CreditCardIcon size={16} className="text-amber-500" />
-              <span className="text-sm text-gray-300">
-                Paiement:
-              </span>
+              <span className="text-sm text-gray-300">Paiement:</span>
               <p className="font-bold text-white/90">
-                {`${data.paymentInfoDetails.split("<br/>")[0]}-${
-                  data.paymentInfoDetails.split("<br/>")[1]
+                {`${(data?.paymentInfoDetails || "<br />").split("<br/>")[0]} ${
+                  (data?.paymentInfoDetails || "<br />").split("<br/>")[1]
                 }`}
               </p>
             </div>

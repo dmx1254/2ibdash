@@ -18,7 +18,10 @@ const StatusBadge = ({
           !isOrder && (status === "Payée" || status === "Terminée"),
         "bg-yellow-900": !isOrder && status === "En attente",
         "bg-red-600": !isOrder && status === "Annulée",
-        "bg-blue-600": !isOrder && status === "En Cours de payment",
+        "bg-blue-600":
+          !isOrder &&
+          (status === "En cours de paiement" ||
+            status === "En cours de paiement"),
       })}
     >
       {!isOrder && (
@@ -35,7 +38,9 @@ const StatusBadge = ({
           "text-green-500": status === "Payée" || status === "Terminée",
           "text-yellow-500": status === "En attente",
           "text-red-500": status === "Annulée",
-          "text-blue-500": status === "En Cours de payment",
+          "text-blue-500":
+            status === "En Cours de payment" ||
+            status === "En cours de paiement",
           "-ml-4": isOrder,
         })}
       >

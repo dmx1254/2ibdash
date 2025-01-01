@@ -78,6 +78,7 @@ export interface OrderLength {
 export interface ExchangeKamas {
   _id: string;
   userId: string;
+  exchangeId?: string;
   serverOut: string;
   qtyToPay: number;
   characterToPay: string;
@@ -94,13 +95,15 @@ export interface Orderbuy {
   _id: string;
   userId: string;
   numBuy: string;
-  jeu: string;
-  server: string;
+  lastname?: string;
+  firstname?: string;
   pu: number;
   qte: number;
   totalPrice: number;
   paymentMethod: string;
   gameName: string;
+  jeu: string;
+  server: string;
   paymentInfoDetails: string;
   currencymethod: string;
   status: string;
@@ -128,6 +131,7 @@ export interface OrderSell {
   paymentMethod: string;
   orderIdPaid: string;
   billing?: any;
+  detailUser?: any;
   cur: string;
   valCurency: number;
   status: string;

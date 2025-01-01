@@ -10,6 +10,7 @@ import { OrderSell } from "@/lib/types/types";
 import OrderVenteDel from "../venteAction/OrderVenteDel";
 import SeeOrderVente from "../venteAction/SeeOrderVente";
 import OrderVenteDot from "../venteAction/OrderVenteDot";
+import EmailDialog from "../EmailDialog";
 
 export const columns: ColumnDef<OrderSell>[] = [
   {
@@ -31,17 +32,39 @@ export const columns: ColumnDef<OrderSell>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => (
-      <div className="flex flex-col items-start gap-2">
-        {row.original.products.map((p, index) => (
-          <p className="text-14-medium" key={index}>
-            <span className="">{`${p.server} - ${p.totalPrice}${parsedDevise(
-              row.original.cur
-            )}`}</span>
-          </p>
-        ))}
-      </div>
-    ),
+    cell: ({ row }) => {
+      return (
+        <div className="w-full flex flex-col items-start gap-2 bg-dark-200 p-1.5 rounded">
+          {row.original.products.map((p, i) => (
+            <div
+              className="w-full text-xs flex  items-center justify-between gap-0.5 pb-2 border-b border-dark-500"
+              key={`${p.character}-${i}`}
+            >
+              <div className="flex flex-col items-start">
+                <span>Categorie</span>
+                <span className="font-bold">{p.category}</span>
+              </div>
+              <div className="flex flex-col items-start">
+                <span>Serveur</span>
+                <span className="font-bold">{p.server}</span>
+              </div>
+              <div className="flex flex-col items-start">
+                <span>Quantité</span>
+                <span className="font-bold">{p.amount}M</span>
+              </div>
+              <div className="flex flex-col items-start">
+                <span>Personnage</span>
+                <span className="font-bold">{p.character}M</span>
+              </div>
+            </div>
+          ))}
+          <div className="flex max-md:flex-col items-start gap-1">
+            <span>Mode de paiement</span>
+            <span className="font-bold">{row?.original.paymentMethod}</span>
+          </div>
+        </div>
+      );
+    },
   },
   {
     accessorKey: "totalPrice",
@@ -81,6 +104,7 @@ export const columns: ColumnDef<OrderSell>[] = [
         <div className="flex items-center gap-2">
           <OrderVenteDel id={data._id} />
           <SeeOrderVente data={data} />
+          <EmailDialog isShowText={true} email={data.billing.email || data?.detailUser?.email} />
           <OrderVenteDot data={data} />
         </div>
       );

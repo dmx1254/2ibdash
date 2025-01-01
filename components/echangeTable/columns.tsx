@@ -15,66 +15,45 @@ export const columns: ColumnDef<ExchangeKamas>[] = [
   {
     header: "N° d'echange",
     cell: ({ row }) => (
-      <p className="text-14-medium">{row?.original.codeToExchange}</p>
+      <p className="text-14-medium">{row?.original.exchangeId || "N/A"}</p>
     ),
   },
   {
+    header: "code d'echange",
+    cell: ({ row }) => (
+      <p className="text-14-medium">{row?.original.codeToExchange}</p>
+    ),
+  },
+
+  {
     accessorKey: "serverOut",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Serveur à payer
-          <CaretSortIcon className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
+    header: "Serveur à payer",
     cell: ({ row }) => (
       <div>
+        <p className="text-14-medium">Serveur: {row?.original.serverOut}</p>
+        <p className="text-14-medium">Quantite: {row?.original.qtyToPay}M</p>
         <p className="text-14-medium">
-          <span className="text-[#24AE7C]">{row?.original.serverOut}</span>
+          Nom personnage: {row?.original.characterToPay}
         </p>
       </div>
     ),
   },
   {
-    accessorKey: "pu",
-    header: "Serveur à rec",
+    accessorKey: "serverIn",
+    header: "serveur à recevoir",
     cell: ({ row }) => (
-      <p className="text-14-medium">{row?.original.serverIn}</p>
-    ),
-  },
-  {
-    accessorKey: "qtyToPay",
-    header: "Qty à payer",
-    cell: ({ row }) => (
-      <p className="text-14-medium">{row?.original.qtyToPay}M</p>
-    ),
-  },
-  {
-    accessorKey: "qtyToReceive",
-    header: "Qty à recevoir",
-    cell: ({ row }) => (
-      <p className="text-14-medium">{row?.original.qtyToReceive}M</p>
+      <div>
+        <p className="text-14-medium">Serveur: {row?.original.serverIn}</p>
+        <p className="text-14-medium">
+          Quantite: {row?.original.qtyToReceive}M
+        </p>
+        <p className="text-14-medium">
+          Nom personnage: {row?.original.characterToReceive}
+        </p>
+      </div>
     ),
   },
 
-  {
-    accessorKey: "characterToPay",
-    header: "Perso à payer",
-    cell: ({ row }) => (
-      <p className="text-14-medium">{row?.original.characterToPay}</p>
-    ),
-  },
-  {
-    accessorKey: "characterToReceive",
-    header: "Perso à recevoir",
-    cell: ({ row }) => (
-      <p className="text-14-medium">{row?.original.characterToReceive}</p>
-    ),
-  },
   {
     accessorKey: "status",
     header: "Status",

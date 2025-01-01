@@ -43,34 +43,37 @@ export const columns: ColumnDef<Orderbuy>[] = [
           <span>Personnage:</span>{" "}
           <span className="text-[#FF4F4E]">{row?.original.gameName}</span>
         </p>
+        <p className="text-14-medium">
+          <span>P.U - Q:</span>{" "}
+          <span className="text-[#FFD147]">
+            {row?.original.pu}
+            {parsedDevise(row?.original.currencymethod)}
+            {" - "}
+            {row?.original.qte}M
+          </span>
+        </p>
+        <p className="text-14-medium">
+          <span>P Total:</span>{" "}
+          <span className="text-[#c2410c]">
+            {row?.original.totalPrice}
+            {parsedDevise(row?.original.currencymethod)}
+          </span>
+        </p>
+        <div className="w-full flex items-center space-x-2">
+          <p className="font-bold text-white/90">
+            {`${row?.original.lastname || "N/A"} ${row?.original.firstname}`}
+            {" - "}
+            {`${
+              (row?.original?.paymentInfoDetails || "<br />").split("<br/>")[0]
+            } ${
+              (row?.original?.paymentInfoDetails || "<br />").split("<br/>")[1]
+            }`}
+          </p>
+        </div>
       </div>
     ),
   },
-  {
-    accessorKey: "pu",
-    header: "P.Unitaire",
-    cell: ({ row }) => (
-      <p className="text-14-medium">
-        {row?.original.pu}
-        {parsedDevise(row?.original.currencymethod)}
-      </p>
-    ),
-  },
-  {
-    accessorKey: "qte",
-    header: "Quantité",
-    cell: ({ row }) => <p className="text-14-medium">{row?.original.qte}M</p>,
-  },
-  {
-    accessorKey: "totalPrice",
-    header: "Total",
-    cell: ({ row }) => (
-      <p className="text-14-medium">
-        {row?.original.totalPrice}
-        {parsedDevise(row?.original.currencymethod)}
-      </p>
-    ),
-  },
+
   {
     accessorKey: "status",
     header: "Status",

@@ -21,7 +21,7 @@ export async function getAllOrdersAchatList(
   currentPage: number
 ) {
   const { BuyModel } = await goapiModels;
-  let itemsPerPage: number = 8;
+  let itemsPerPage: number = 15;
   const offset = (currentPage - 1) * itemsPerPage;
 
   const matchConditions: any = {};
@@ -223,7 +223,7 @@ export async function getAllOrdersVenteList(
   currentPage: number
 ) {
   const { OrderModelIben } = await ibenModels;
-  let itemsPerPage: number = 8;
+  let itemsPerPage: number = 15;
   const offset = (currentPage - 1) * itemsPerPage;
 
   const matchConditions: any = {};
@@ -320,7 +320,7 @@ export async function getAllOrdersEchangeList(
   currentPage: number
 ) {
   const { ExchangeModel } = await goapiModels;
-  let itemsPerPage: number = 8;
+  let itemsPerPage: number = 15;
   const offset = (currentPage - 1) * itemsPerPage;
 
   const matchConditions: any = {};

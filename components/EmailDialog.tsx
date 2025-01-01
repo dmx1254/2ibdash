@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef, ChangeEvent } from "react";
+import React, { useState, useRef, ChangeEvent, useEffect } from "react";
 import {
   Dialog,
   DialogContent,
@@ -44,22 +44,18 @@ import {
   sendUserEmail,
   sendUserServers,
 } from "@/lib/actions/verification.actions";
-import { usePathname } from "next/navigation";
 
-const EmailDialog = () => {
-  const myLastEmails =
-    typeof window !== "undefined"
-      ? window.localStorage.getItem("lastEmails")
-      : null;
-  const lastEmails: string[] | null = myLastEmails
-    ? JSON.parse(myLastEmails)
-    : null;
-
-  const pathname = usePathname();
-
+const EmailDialog = ({
+  isShowText = false,
+  email = "",
+}: {
+  isShowText?: boolean;
+  email?: string;
+}) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [to, setTo] = useState<string>("");
-  const [emailsToSend, setEmailsToSend] = useState<string[]>([]);
+  const [emailsToSend, setEmailsToSend] = useState<string[]>([email]);
+  const [lastEmails, setLastEmails] = useState<string[]>([]);
   const [subject, setSubject] = useState<string>("");
   const [message, setMessage] = useState<string>("");
   const [attachedFiles, setAttachedFiles] = useState<AttachedFile[]>([]);
@@ -87,8 +83,18 @@ const EmailDialog = () => {
     600
   );
 
+  useEffect(() => {
+    const myLastEmails = window?.localStorage.getItem("lastEmails") ?? null;
+    const lastEmails: string[] | null = myLastEmails
+      ? JSON.parse(myLastEmails)
+      : null;
+
+    setLastEmails(lastEmails ?? []);
+  }, []);
+
   const handleSendEmail = async () => {
-    if (emailsToSend.length < 1 || !subject || !message) {
+    const emailFiltered = emailsToSend.filter((e) => e !== "");
+    if (emailFiltered.length < 1 || !subject || !message) {
       toast.error("Veuillez remplir tous les champs", {
         style: {
           background: "#1A1D21",
@@ -100,7 +106,7 @@ const EmailDialog = () => {
       try {
         setIsLoadingEmail(true);
         const result = await sendUserEmail(
-          emailsToSend[0],
+          emailFiltered[0],
           message,
           userEmails[0].lastname,
           userEmails[0].firstname,
@@ -226,12 +232,21 @@ const EmailDialog = () => {
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <Button
-        className="text-white cursor-pointer"
-        onClick={() => setIsOpen(true)}
-      >
-        <Mail className="mr-2 h-65 w-65" /> Envoyer un email
-      </Button>
+      {isShowText ? (
+        <button
+          className="flex items-center justify-center p-0.5 border rounded border-violet-300 text-violet-400 transition-all hover:text-violet-700"
+          onClick={() => setIsOpen(true)}
+        >
+          <Send size={18} />
+        </button>
+      ) : (
+        <Button
+          className="text-white cursor-pointer"
+          onClick={() => setIsOpen(true)}
+        >
+          <Mail className="mr-2 h-65 w-65" /> Envoyer un email
+        </Button>
+      )}
 
       <DialogContent className="sm:max-w-4xl max-h-[90vh] overflow-y-auto bg-dark-400 border-dark-500">
         <DialogHeader>

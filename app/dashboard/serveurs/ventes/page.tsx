@@ -79,7 +79,7 @@ const ServerVentePage = async ({
         >
           <DataTable
             totalPages={serversVente.totalPages}
-            itemsperPage={8}
+            itemsperPage={15}
             columns={columns}
             data={serversVente.servers}
             currentPage={currentPage}

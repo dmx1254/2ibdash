@@ -15,6 +15,7 @@ async function initializeModels(): Promise<any> {
   // Définir les interfaces pour les documents
   interface IExchange extends Document {
     userId: string;
+    exchangeId: string;
     serverOut: string;
     qtyToPay: number;
     characterToPay: string;
