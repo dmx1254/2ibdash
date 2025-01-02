@@ -11,6 +11,7 @@ import { cn } from "@/lib/utils";
 import ClientAction from "./ClientAction";
 import UpdateClient from "../patientActtion/UpdateClient";
 import DeleteClient from "../patientActtion/DeleteClient";
+import EmailDialog from "../EmailDialog";
 
 export const columns: ColumnDef<USERLOGINRESPONSE>[] = [
   {
@@ -112,6 +113,12 @@ export const columns: ColumnDef<USERLOGINRESPONSE>[] = [
           <div className="flex items-center gap-3">
             <DeleteClient id={data._id} />
             <UpdateClient data={data} />
+            <EmailDialog
+              isShowText={true}
+              email={data.email || ""}
+              firstnameS={data.firstname || ""}
+              lastnameS={data.lastname || ""}
+            />
           </div>
           <ClientAction data={data} />
         </div>
