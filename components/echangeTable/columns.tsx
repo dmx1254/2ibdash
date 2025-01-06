@@ -13,13 +13,7 @@ import SeeEchange from "../echangeAction/SeeEchange";
 
 export const columns: ColumnDef<ExchangeKamas>[] = [
   {
-    header: "N° d'echange",
-    cell: ({ row }) => (
-      <p className="text-14-medium">{row?.original.exchangeId || "N/A"}</p>
-    ),
-  },
-  {
-    header: "code d'echange",
+    header: "Code d'echange",
     cell: ({ row }) => (
       <p className="text-14-medium">{row?.original.codeToExchange}</p>
     ),
