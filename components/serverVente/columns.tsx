@@ -57,27 +57,12 @@ export const columns: ColumnDef<ServerBuy>[] = [
   {
     accessorKey: "serverPriceDh",
     header: "Prix(Maroc DH)",
-    cell: ({ row }) => (
-      <p className="text-14-medium">{row?.original.serverPrice}DH</p>
-    ),
+    cell: ({ row }) => <UpdateServerVente type="price" data={row.original} />,
   },
   {
     accessorKey: "serverStatus",
     header: "Status",
-    cell: ({ row }) => (
-      <p
-        className={clsx("text-14-medium p-2 rounded-[6px] inline-flex", {
-          "bg-green-600 text-[#24AE7C]":
-            row?.original.serverStatus === "Disponible",
-          "bg-red-600 text-[#FF4F4E]":
-            row?.original.serverStatus === "Stock complet",
-          "bg-blue-600 text-[#3b82f6]":
-            row?.original.serverStatus === "Vendre rapidement",
-        })}
-      >
-        {row?.original.serverStatus}
-      </p>
-    ),
+    cell: ({ row }) => <UpdateServerVente type="status" data={row.original} />,
   },
 
   {

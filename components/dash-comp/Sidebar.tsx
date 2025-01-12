@@ -49,7 +49,7 @@ const Sidebar = () => {
                 })}
                 asChild
               >
-                <Link href={profil.slug} className="flex items-start gap-2">
+                <Link href={profil.slug} className="flex items-start z-20 gap-2">
                   <span>
                     <profil.icon size={20} />
                   </span>

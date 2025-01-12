@@ -115,7 +115,7 @@ export async function getAllServersAchatList(
   currentPage: number
 ) {
   const { ServerModel } = await goapiModels;
-  let itemsPerPage: number = 8;
+  let itemsPerPage: number = 15;
   const offset = (currentPage - 1) * itemsPerPage;
 
   const matchConditions: any = {};
@@ -167,7 +167,7 @@ export async function getAllServersVenteList(
   currentPage: number
 ) {
   const { ServerModelIben } = await ibenModels;
-  let itemsPerPage: number = 8;
+  let itemsPerPage: number = 15;
   const offset = (currentPage - 1) * itemsPerPage;
 
   const matchConditions: any = {};

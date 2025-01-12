@@ -4,8 +4,6 @@ import { ColumnDef } from "@tanstack/react-table";
 
 import StatusBadge from "../StatusBadge";
 import { formatDateTime } from "@/lib/utils";
-import { Button } from "../ui/button";
-import { CaretSortIcon } from "@radix-ui/react-icons";
 import { ExchangeKamas } from "@/lib/types/types";
 import EchangeDel from "../echangeAction/EchangeDel";
 import EchangeDot from "../echangeAction/EchangeDot";
