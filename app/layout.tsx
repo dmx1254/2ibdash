@@ -12,8 +12,8 @@ const fontSans = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "2ibn",
-  description: "2ibn dashboard management",
+  title: "ibendouma",
+  description: "ibendouma dashboard management",
   icons:{
     icon: "/logo.png"
   }

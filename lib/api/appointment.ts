@@ -513,7 +513,7 @@ export async function venteIbenUpdateStatus(status: string, venteId: string) {
       const { email, lastname, firstname } = await res.billing;
       const { cur, totalPrice, orderNum, updatedAt, products } = res;
       const { data, error } = await resend.emails.send({
-        from: "2IBN Support <support@2ibn.com>",
+        from: "Ibendouma Support <support@ibendouma.com>",
         to: [email],
         text: "",
         subject: "🎉 Order Confirmed! 🚀",
@@ -574,7 +574,7 @@ export async function AchatGoUpdateStatus(status: string, achatId: string) {
         pu,
       } = res;
       const { data, error } = await resend.emails.send({
-        from: "2IBN Support <support@2ibn.com>",
+        from: "Ibendouma Support <support@ibendouma.com>",
         to: [userParsed.email],
         text: "",
         subject: `🎉 Order number ${numBuy} payed! 🚀`,

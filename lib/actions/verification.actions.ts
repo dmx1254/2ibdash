@@ -54,7 +54,7 @@ export async function sendUserEmail(
 
   // Envoi de l'email via Resend
   const { data, error } = await resend.emails.send({
-    from: "Ibendouma Support <support@2ibn.com>",
+    from: "Ibendouma Support <support@ibendouma.com>",
     to: [email],
     subject: object,
     text: "",
@@ -86,7 +86,7 @@ export async function sendUserServers(
   const currencyRates = result?.currencyRates;
 
   const emailBatch = emails.map((email) => ({
-    from: "2IBN Support <support@2ibn.com>",
+    from: "Ibendouma Support <support@ibendouma.com>",
     to: email,
     subject: object,
     text: "",
