@@ -32,8 +32,8 @@ const Sidebar = () => {
             alt="2ibn"
             className="mb-3 h-20 w-20"
           />
-          <span className="max-md:hidden font-extrabold -mt-3 text-[34px] text-white -ml-3">
-            2ibn
+          <span className="max-md:hidden font-extrabold -mt-3 text-[18px] text-white -ml-3">
+            Ibendouma
           </span>
         </Link>
 

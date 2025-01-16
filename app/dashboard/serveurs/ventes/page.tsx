@@ -29,7 +29,9 @@ const ServerVentePage = async ({
   );
 
   const currencies = await getVenteCurrencies();
-  // console.log(currencies);
+
+
+  // console.log(serversVente.servers);
 
   return (
     <div className="mx-auto flex w-full flex-col space-y-14">
@@ -78,7 +80,7 @@ const ServerVentePage = async ({
           fallback={<LatestInvoicesSkeleton />}
         >
           <DataTable
-            totalPages={serversVente.totalPages}
+            totalPages={serversVente.totalPages || 0}
             itemsperPage={15}
             columns={columns}
             data={serversVente.servers}

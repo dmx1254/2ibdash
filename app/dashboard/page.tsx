@@ -37,14 +37,26 @@ export const metadata: Metadata = {
 export default async function DashboardPage({
   searchParams,
 }: SearchParamProps) {
-  const totalIbenOrders = await ibenOrdersCounts();
-  const totalUsers = await getUsersCounts();
-  const totalIbyOrders = await getibytradeOrdersCount();
-  const usersOnline = await userOnline();
-  const visites = await getPatientVisit();
-  const devices = await getPatientDevicesTypes();
-  const oIbyGraph = await ibyOrdersGraph();
+  const [
+    totalIbenOrders,
+    totalUsers,
+    totalIbyOrders,
+    usersOnline,
+    visites,
+    devices,
+    oIbyGraph,
+  ] = await Promise.all([
+    ibenOrdersCounts(),
+    getUsersCounts(),
+    getibytradeOrdersCount(),
+    userOnline(),
+    getPatientVisit(),
+    getPatientDevicesTypes(),
+    ibyOrdersGraph(),
+  ]);
   const isAdmin = !!searchParams.isAdmin;
+
+  await new Promise((resolve) => setTimeout(resolve, 1000));
 
   return (
     <>

@@ -78,7 +78,7 @@ const ServerAchatPage = async ({
           fallback={<LatestInvoicesSkeleton />}
         >
           <DataTable
-            totalPages={serversAchat.totalPages}
+            totalPages={serversAchat.totalPages || 0}
             itemsperPage={15}
             columns={columns}
             data={serversAchat.servers}

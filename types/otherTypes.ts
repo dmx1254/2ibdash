@@ -98,12 +98,12 @@ export const sidebarInfo: profilePerso[] = [
     subUrls: [
       {
         id: "lpqzkla19",
-        title: "Achats",
+        title: "Ventes",
         slug: "/dashboard/serveurs/achats",
       },
       {
         id: "lpaqgtai9",
-        title: "Ventes",
+        title: "Achats",
         slug: "/dashboard/serveurs/ventes",
       },
     ],
